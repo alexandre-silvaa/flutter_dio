@@ -6,11 +6,11 @@ class ApiService {
 
   Future<Response> getCharacters({required int page}) async {
     try {
-      final Response response = await _dioClient.dio.get('/character');
+      final Response response = await _dioClient.dio
+          .get('/character', queryParameters: {'page': page});
       return response;
     } on DioException catch (e) {
-      // Tratamento de erro
-      throw Exception('Erro ao recuperar personagens login: ${e.message}');
+      throw Exception('Erro ao recuperar personagens: ${e.message}');
     }
   }
 }
