@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dio/components/ButtonPaginated.dart';
 import 'package:flutter_dio/components/CharacterTile.dart';
 import 'package:flutter_dio/store/characters_store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -36,7 +37,7 @@ class _CharactersPageState extends State<CharactersPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: const InputDecoration(
-                labelText: 'Search',
+                labelText: 'Procure pelo nome',
                 border: OutlineInputBorder(),
               ),
               onChanged: (value) {
@@ -71,6 +72,7 @@ class _CharactersPageState extends State<CharactersPage> {
               },
             ),
           ),
+          ButtonPaginated(charactersStore.changePage)
         ],
       ),
     );

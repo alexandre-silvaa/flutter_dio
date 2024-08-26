@@ -6,13 +6,14 @@ class CharacterRepository {
   final ApiService _apiService = ApiService();
 
   Future<PaginatedResponseDto<CharacterModel>> getCharacters(
-      {int page = 1}) async {
+      {int? page, String? name}) async {
     try {
-      final response = await _apiService.getCharacters(page: page);
+      final response = await _apiService.getCharacters(page: page, name: name);
 
-      // Converte a resposta para PaginatedResponseDto<CharacterModel>
       return PaginatedResponseDto<CharacterModel>.fromJson(
-          response.data, (json) => CharacterModel.fromJson(json));
+        response.data,
+        (json) => CharacterModel.fromJson(json),
+      );
     } catch (e) {
       throw Exception('Erro ao buscar personagens: $e');
     }

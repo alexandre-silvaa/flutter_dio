@@ -41,6 +41,38 @@ mixin _$CharactersStore on _CharactersStore, Store {
     });
   }
 
+  late final _$searchQueryAtom =
+      Atom(name: '_CharactersStore.searchQuery', context: context);
+
+  @override
+  String get searchQuery {
+    _$searchQueryAtom.reportRead();
+    return super.searchQuery;
+  }
+
+  @override
+  set searchQuery(String value) {
+    _$searchQueryAtom.reportWrite(value, super.searchQuery, () {
+      super.searchQuery = value;
+    });
+  }
+
+  late final _$currentPageAtom =
+      Atom(name: '_CharactersStore.currentPage', context: context);
+
+  @override
+  int get currentPage {
+    _$currentPageAtom.reportRead();
+    return super.currentPage;
+  }
+
+  @override
+  set currentPage(int value) {
+    _$currentPageAtom.reportWrite(value, super.currentPage, () {
+      super.currentPage = value;
+    });
+  }
+
   late final _$errorAtom =
       Atom(name: '_CharactersStore.error', context: context);
 
@@ -61,9 +93,34 @@ mixin _$CharactersStore on _CharactersStore, Store {
       AsyncAction('_CharactersStore.loadCharacters', context: context);
 
   @override
-  Future<void> loadCharacters({int page = 1}) {
+  Future<void> loadCharacters({int? page, String? name}) {
     return _$loadCharactersAsyncAction
-        .run(() => super.loadCharacters(page: page));
+        .run(() => super.loadCharacters(page: page, name: name));
+  }
+
+  late final _$_CharactersStoreActionController =
+      ActionController(name: '_CharactersStore', context: context);
+
+  @override
+  void updateSearchQuery(String query) {
+    final _$actionInfo = _$_CharactersStoreActionController.startAction(
+        name: '_CharactersStore.updateSearchQuery');
+    try {
+      return super.updateSearchQuery(query);
+    } finally {
+      _$_CharactersStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changePage(DirectionEnum direction) {
+    final _$actionInfo = _$_CharactersStoreActionController.startAction(
+        name: '_CharactersStore.changePage');
+    try {
+      return super.changePage(direction);
+    } finally {
+      _$_CharactersStoreActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
@@ -71,6 +128,8 @@ mixin _$CharactersStore on _CharactersStore, Store {
     return '''
 characters: ${characters},
 isLoading: ${isLoading},
+searchQuery: ${searchQuery},
+currentPage: ${currentPage},
 error: ${error}
     ''';
   }
